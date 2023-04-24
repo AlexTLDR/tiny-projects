@@ -71,3 +71,15 @@ func equalBookworms(bookworms, target []Bookworm) bool {
 	}
 	return true
 }
+
+func equalBooks(books, target []Book) bool {
+	if len(books) != len(target) {
+		return false
+	}
+	for i := range books {
+		if books[i] != target[i] {
+			return false
+		}
+	}
+	return true
+}
