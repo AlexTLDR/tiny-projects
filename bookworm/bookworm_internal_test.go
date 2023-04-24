@@ -54,3 +54,20 @@ func TestLoadBookworms_success(t *testing.T) {
 		})
 	}
 }
+
+func equalBookworms(bookworms, target []Bookworm) bool {
+	if len(bookworms) != len(target) {
+		return false
+	}
+
+	for i := range bookworms {
+		if bookworms[i].Name != target[i].Name {
+			return false
+		}
+
+		if !equalBooks(bookworms[i].Books, target[i].Books) {
+			return false
+		}
+	}
+	return true
+}
