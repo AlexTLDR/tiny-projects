@@ -1,0 +1,34 @@
+[
+    
+      "name": "Alex",
+      "books": [
+        {
+          "author": "John Arundel",
+          "title": "For the love of Go"
+        },
+        {
+          "author": "John Arundel",
+          "title": "The power of Go tools"
+        }
+      ]
+    },
+    {
+      "name": "Cami",
+      "books": [
+        {
+          "author": "Scott Berkun",
+          "title": "Making things happen"
+        },
+        {
+          "author": "Gregory M. Horine",
+          "title": "TProject Management Absolute Beginner’s Guide 5th Edition"
+        },
+        {
+          "author": "Antonio Nieto-Rodriguez",
+          "title": "JHarvard Business Review Project Management Handbook"
+        }
+      ]
+    }
+  
+  
+  
