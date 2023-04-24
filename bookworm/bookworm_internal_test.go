@@ -18,22 +18,29 @@ var (
 func TestLoadBookworms_success(t *testing.T) {
 	tests := map[string]struct {
 		bookwormsFile string
-	want          []Bookworm
-	wantErr       bool
+		want          []Bookworm
+		wantErr       bool
 	}{
 		"file exists": {
 			bookwormsFile: "testdata/bookworms.json",
 			want: []Bookworm{
-				{Name: "Alex", Books: []Book{forTheLoveOfGo,thePowerOfGoTools }},
-				{Name: "Cami", Books: []Book{makingThingsHappen,tjHarvardBusinessReviewProjectManagementHandbook }},
+				{Name: "Alex", Books: []Book{forTheLoveOfGo, thePowerOfGoTools}},
+				{Name: "Cami", Books: []Book{makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
 			},
 			wantErr: false,
 		},
-		"file doesn't exist": {...},
-		"invalid JSON": {...},
+		"file doesn't exist": {
+			bookwormsFile: "testdata/no_file_here.json",
+			want:          nil,
+			wantErr:       true,
+		},
+		"invalid JSON": {
+			bookwormsFile: "testdata/invalid.json",
+			want:          nil,
+			wantErr:       true},
 	}
-	for name, testCase := range tests{
-		t.Run(name, func(t *testing.T){
+	for name, testCase := range tests {
+		t.Run(name, func(t *testing.T) {
 			got, err := loadBookworms(testCase.bookwormsFile)
 			if err != nil && !testCase.wantErr {
 				t.Fatalf("expected an error %s, got none", err.Error())
