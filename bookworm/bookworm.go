@@ -15,6 +15,7 @@ type Book struct {
 	Title  string `json:"title"`
 }
 
+// loadBookworms reads the file and returns the list of bookworms, and their beloved books, found therein.
 func loadBookworms(filePath string) ([]Bookworm, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -29,4 +30,19 @@ func loadBookworms(filePath string) ([]Bookworm, error) {
 		return nil, err
 	}
 	return bookworms, nil
+}
+
+func findCommonBooks(bookworms []Bookworm) []Book {
+	booksCount(bookworms)
+	return nil
+}
+
+func booksCount(bookworms []Bookworm) map[Book]uint {
+	count := make(map[Book]uint)
+	for _, bookwrm := range bookworms {
+		for _, book := range bookwrm.Books {
+			count[book]++
+		}
+	}
+	return count
 }
