@@ -1,20 +1,27 @@
 // run the program by adding the flag
-// go run helloworld.go -lang=el
+// go run helloworld.go -lang=en
+// check localhost:8080
 
 package main
 
 import (
 	"flag"
 	"fmt"
+	"net/http"
 )
 
 func main() {
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server is running on port 8080")
+}
+
+func handler(writer http.ResponseWriter, request *http.Request) {
 	var lang string
 	flag.StringVar(&lang, "lang", "ro", "The required language, e.g. en, ro...")
 	flag.Parse()
-
 	greeting := greet(language(lang))
-	fmt.Println(greeting)
+	fmt.Fprintf(writer, "%s, %s!", greeting, request.URL.Path[1:])
 }
 
 type language string
