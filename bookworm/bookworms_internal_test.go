@@ -3,10 +3,11 @@ package main
 import "testing"
 
 var (
-	forTheLoveOfGo                                   = Book{Author: "John Arundel", Title: "The Handmaid's Tale"}
-	thePowerOfGoTools                                = Book{Author: "John Arundel", Title: "The power of Go tools"}
-	makingThingsHappen                               = Book{Author: "JScott Berkun", Title: "Making things happen"}
-	tjHarvardBusinessReviewProjectManagementHandbook = Book{Author: "JAntonio Nieto-Rodriguez", Title: "TJHarvard Business Review Project Management Handbook"}
+	forTheLoveOfGo                                     = Book{Author: "John Arundel", Title: "The Handmaid's Tale"}
+	thePowerOfGoTools                                  = Book{Author: "John Arundel", Title: "The power of Go tools"}
+	makingThingsHappen                                 = Book{Author: "JScott Berkun", Title: "Making things happen"}
+	tjHarvardBusinessReviewProjectManagementHandbook   = Book{Author: "JAntonio Nieto-Rodriguez", Title: "TJHarvard Business Review Project Management Handbook"}
+	TProjectManagementAbsoluteBeginnersGuide5thEdition = Book{Author: "Gregory M. Horine", Title: "Project Management Absolute Beginner's Guide (5th Edition)"}
 )
 
 // type testCase struct {
@@ -25,7 +26,7 @@ func TestLoadBookworms_success(t *testing.T) {
 			bookwormsFile: "testdata/bookworms.json",
 			want: []Bookworm{
 				{Name: "Alex", Books: []Book{forTheLoveOfGo, thePowerOfGoTools}},
-				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
+				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook, TProjectManagementAbsoluteBeginnersGuide5thEdition}},
 				{Name: "Oreo", Books: []Book{}},
 			},
 			wantErr: false,
@@ -106,9 +107,9 @@ func TestBooksCount(t *testing.T) {
 		"nominal use case": {
 			input: []Bookworm{
 				{Name: "Alex", Books: []Book{forTheLoveOfGo, thePowerOfGoTools}},
-				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
+				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook, TProjectManagementAbsoluteBeginnersGuide5thEdition}},
 			},
-			want: map[Book]uint{forTheLoveOfGo: 2, thePowerOfGoTools: 2, makingThingsHappen: 1, tjHarvardBusinessReviewProjectManagementHandbook: 1},
+			want: map[Book]uint{forTheLoveOfGo: 2, thePowerOfGoTools: 2, makingThingsHappen: 1, tjHarvardBusinessReviewProjectManagementHandbook: 1, TProjectManagementAbsoluteBeginnersGuide5thEdition: 1},
 		},
 		"no bookworms": {
 			input: []Bookworm{},
