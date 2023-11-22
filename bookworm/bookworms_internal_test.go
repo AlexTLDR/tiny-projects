@@ -25,7 +25,8 @@ func TestLoadBookworms_success(t *testing.T) {
 			bookwormsFile: "testdata/bookworms.json",
 			want: []Bookworm{
 				{Name: "Alex", Books: []Book{forTheLoveOfGo, thePowerOfGoTools}},
-				{Name: "Cami", Books: []Book{makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
+				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
+				{Name: "Oreo", Books: []Book{}},
 			},
 			wantErr: false,
 		},
@@ -98,5 +99,31 @@ func equalBooksCount(got, want map[Book]uint) bool {
 }
 
 func TestBooksCount(t *testing.T) {
+	tt := map[string]struct {
+		input []Bookworm
+		want  map[Book]uint
+	}{
+		"nominal use case": {
+			input: []Bookworm{
+				{Name: "Alex", Books: []Book{forTheLoveOfGo, thePowerOfGoTools}},
+				{Name: "Cami", Books: []Book{forTheLoveOfGo, thePowerOfGoTools, makingThingsHappen, tjHarvardBusinessReviewProjectManagementHandbook}},
+			},
+			want: map[Book]uint{forTheLoveOfGo: 2, thePowerOfGoTools: 2, makingThingsHappen: 1, tjHarvardBusinessReviewProjectManagementHandbook: 1},
+		},
+		"no bookworms": {
+			input: []Bookworm{},
+			want:  map[Book]uint{},
+		},
+		// "bookworm without books":            {},
+		// "bookworm with twice the same book": {},
+	}
 
+	for name, tc := range tt {
+		t.Run(name, func(t *testing.T) {
+			got := booksCount(tc.input)
+			if !equalBooksCount(got, tc.want) {
+				t.Fatalf("different result: got %v, expected %v", got, tc.want)
+			}
+		})
+	}
 }

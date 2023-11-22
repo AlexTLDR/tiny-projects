@@ -16,6 +16,14 @@
       "name": "Cami",
       "books": [
         {
+          "author": "John Arundel",
+          "title": "For the love of Go"
+        },
+        {
+          "author": "John Arundel",
+          "title": "The power of Go tools"
+        },
+        {
           "author": "Scott Berkun",
           "title": "Making things happen"
         },
@@ -28,6 +36,10 @@
           "title": "JHarvard Business Review Project Management Handbook"
         }
       ]
+    },
+    {
+      "name": "Oreo",
+      "books": []
     }
   ]
   
