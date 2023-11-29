@@ -7,21 +7,22 @@ import "fmt"
 func main() {
 	cipherText := "CSOITEUIWUIZNSROCNKFD"
 	keyword := "GOLANG"
-	for {
-		for i := 0; i < len(cipherText); i++ {
-			c := cipherText[i]
-			if c >= 'a' && c <= 'z' {
-				c -= 3
-				if c < 'a' {
-					c += 26
-				}
-			} else if c >= 'A' && c <= 'Z' {
-				c -= 3
-				if c < 'A' {
-					c += 26
-				}
-			}
-			fmt.Printf("%c", c)
-		}
+	var message string
+	var keyIndex int
+
+	for i := 0; i < len(cipherText); i++ {
+		// A=0, B=1, ... Z=25
+		c := cipherText[i] - 'A'
+		k := keyword[keyIndex] - 'A'
+
+		// cipher letter - key letter
+		c = (c-k+26)%26 + 'A'
+		message += string(c)
+
+		// increment keyIndex
+		keyIndex++
+		keyIndex %= len(keyword)
 	}
+
+	fmt.Println(message)
 }
