@@ -12,60 +12,17 @@ type Logger struct {
 	output    io.Writer
 }
 
-// Debugf formats and prints a message if the log level is debug or higher.
-func (l *Logger) Debugf(format string, args ...any) {
-	if l.output == nil {
-		l.output = os.Stdout
-	}
-	if l.threshold <= LevelDebug {
-		l.logf(format, args...)
-	}
-}
-
-func (l *Logger) Infof(format string, args ...any) {
-	if l.output == nil {
-		l.output = os.Stdout
-	}
-
-	if l.threshold <= LevelInfo {
-		l.logf(format, args...)
-	}
-}
-
-func (l *Logger) Warnf(format string, args ...any) {
-	if l.output == nil {
-		l.output = os.Stdout
-	}
-
-	if l.threshold <= LevelWarn {
-		l.logf(format, args...)
-	}
-}
-
-func (l *Logger) Errorf(format string, args ...any) {
-	if l.output == nil {
-		l.output = os.Stdout
-	}
-
-	if l.threshold <= LevelError {
-		l.logf(format, args...)
-	}
-}
-
-func (l *Logger) Fatalf(format string, args ...any) {
-	if l.output == nil {
-		l.output = os.Stdout
-	}
-
-	if l.threshold <= LevelFatal {
-		l.logf(format, args...)
-	}
-}
-
 // logf prints the message to the output.
 // Add decorations here, if any.
 func (l *Logger) logf(format string, args ...any) {
 	_, _ = fmt.Fprintf(l.output, format+"\n", args...)
+}
+// Logf logs a message at the specified level.
+func (l *Logger) Logf(lvl Level, format string, args ...any){
+	if l.threshold > lvl {
+		return
+	}
+	l.logf(format, args...)
 }
 
 // New returns you a logger, ready to log at the required threshold.

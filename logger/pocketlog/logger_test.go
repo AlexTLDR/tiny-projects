@@ -25,9 +25,9 @@ func (t *testWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-func ExampleLogger_debugf() {
+func ExampleLogger_Logf() {
 	debugLogger := pocketlog.New(pocketlog.LevelDebug)
-	debugLogger.Debugf("Hello, %s", "world")
+	debugLogger.Logf(pocketlog.LevelDebug, "Hello, %s", "world")
 }
 
 func TestLogger_DebugfInfofWarningfErrorfFatalf(t *testing.T) {
@@ -64,11 +64,11 @@ func TestLogger_DebugfInfofWarningfErrorfFatalf(t *testing.T) {
 			tw := &testWriter{}
 
 			testedLogger := pocketlog.New(tc.level, pocketlog.WithOutput(tw))
-			testedLogger.Debugf(debugMessage)
-			testedLogger.Infof(infoMessage)
-			testedLogger.Warnf(warningMessage)
-			testedLogger.Errorf(errorMessage)
-			testedLogger.Fatalf(fatalMessage)
+			testedLogger.Logf(pocketlog.LevelDebug, debugMessage)
+			testedLogger.Logf(pocketlog.LevelInfo, infoMessage)
+			testedLogger.Logf(pocketlog.LevelWarn, warningMessage)
+			testedLogger.Logf(pocketlog.LevelError, errorMessage)
+			testedLogger.Logf(pocketlog.LevelFatal, fatalMessage)
 
 			if tw.contents != tc.expected {
 				t.Errorf("Expected %s, got %s", tc.expected, tw.contents)
