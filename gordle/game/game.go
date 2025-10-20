@@ -1,19 +1,49 @@
 package game
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+)
+
+const solutionLenght = 5
 
 type Game struct {
-    // Define fields for the game state
+	reader *bufio.Reader
 }
 
 // NewGame creates a new game instance.
-func NewGame() *Game {
-    g := &Game{}
+func NewGame(playerInput io.Reader) *Game {
+    g := &Game{
+        reader: bufio.NewReader(playerInput),
+    }
     return g
 }
 
 // Play runs the game
 func (g *Game) Play() {
     fmt.Println("Welcome to Gordle!")
-    fmt.Printf("Enter your guess:\n ")
+    fmt.Printf("Enter your guess:\n")
+}
+
+// ask reads input until a valid suggestion is made (and returned)
+func (g *Game) ask() []rune{
+	fmt.Printf("Enter a %d-character guess:\n", solutionLenght)
+
+	for{
+		playerInput, _, err := g.reader.ReadLine()
+		if err != nil {
+			_, _ = fmt.Fprintf(os.Stderr, "Gordle failed to read your guess: %s\n", err.Error())
+			continue
+		}
+
+		guess := []rune(string(playerInput))
+
+		if len(guess) != solutionLenght {
+			_, _ = fmt.Fprintf(os.Stderr, "Your attempt is invalid with Gordle's solution! Expected %d characters, got %d.\n", solutionLenght, len(guess))
+		}
+
+		return guess
+	}
 }
