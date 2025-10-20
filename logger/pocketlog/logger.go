@@ -18,7 +18,7 @@ func (l *Logger) Debugf(format string, args ...any) {
 		l.output = os.Stdout
 	}
 	if l.threshold <= LevelDebug {
-		l.logf("[DEBUG]", format, args...)
+		l.logf(format, args...)
 	}
 }
 
@@ -28,7 +28,7 @@ func (l *Logger) Infof(format string, args ...any) {
 	}
 
 	if l.threshold <= LevelInfo {
-		l.logf("[INFO]", format, args...)
+		l.logf(format, args...)
 	}
 }
 
@@ -38,7 +38,7 @@ func (l *Logger) Warnf(format string, args ...any) {
 	}
 
 	if l.threshold <= LevelWarn {
-		l.logf("[WARN]", format, args...)
+		l.logf(format, args...)
 	}
 }
 
@@ -48,7 +48,7 @@ func (l *Logger) Errorf(format string, args ...any) {
 	}
 
 	if l.threshold <= LevelError {
-		l.logf("[ERROR]", format, args...)
+		l.logf(format, args...)
 	}
 }
 
@@ -57,20 +57,24 @@ func (l *Logger) Fatalf(format string, args ...any) {
 		l.output = os.Stdout
 	}
 
-	if l.threshold > LevelFatal {
-		l.logf("[FATAL]", format, args...)
+	if l.threshold <= LevelFatal {
+		l.logf(format, args...)
 	}
 }
 
-func (l *Logger) logf(level string, format string, args ...any) {
-	_, _ = fmt.Fprintf(l.output, level+": "+format+"\n", args...)
+// logf prints the message to the output.
+// Add decorations here, if any.
+func (l *Logger) logf(format string, args ...any) {
+	_, _ = fmt.Fprintf(l.output, format+"\n", args...)
 }
 
 // New returns you a logger, ready to log at the required threshold.
 // The default output is Stdout.
-func New(threshold Level, output io.Writer) *Logger {
-	return &Logger{
-		threshold: threshold,
-		output:    output,
+func New(threshold Level, opts ...Option) *Logger {
+	lgr := &Logger{threshold: threshold, output: os.Stdout}
+
+	for _, configFunc := range opts {
+		configFunc(lgr)
 	}
+	return lgr
 }
