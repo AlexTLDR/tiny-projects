@@ -1,8 +1,12 @@
 package main
 
-import "github.com/AlexTLDR/tiny-projects/gordle/game"
+import (
+	"os"
+
+	"github.com/AlexTLDR/tiny-projects/gordle/game"
+)
 
 func main(){
-	g := game.NewGame()
+	g := game.NewGame(os.Stdin)
 	g.Play()
 }
